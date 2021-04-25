@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://hamncafe-test.herokuapp.com/")
 public class BookingController {
 
     @Autowired
