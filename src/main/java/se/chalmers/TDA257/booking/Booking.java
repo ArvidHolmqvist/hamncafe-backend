@@ -3,8 +3,9 @@ package se.chalmers.TDA257.booking;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
+import java.time.LocalTime;
 
 /**
  * Class for the booking object containing information about what time the booking is as well
@@ -12,18 +13,17 @@ import java.util.Date;
  */
 @Getter @Setter
 public class Booking {
-    private long id;
+    private long id = 0;
     private String guestName;
     private String guestEmail;
     private String guestTelNr;
     private int nrOfPeople;
     private Date bookingDate;
-    private Time startTime;
+    private LocalTime startTime;
     private String additionalInfo;
     
-    public Booking(long id, String guestName, String guestEmail, String guestTelNr, int nrOfPeople, Date bookingDate,
-            Time startTime, String additionalInfo) {
-        this.id = id;
+    public Booking(String guestName, String guestEmail, String guestTelNr, int nrOfPeople, Date bookingDate,
+            LocalTime startTime, String additionalInfo) {
         this.guestName = guestName;
         this.guestEmail = guestEmail;
         this.guestTelNr = guestTelNr;
@@ -43,6 +43,7 @@ public class Booking {
                 ", nrOfPeople=" + nrOfPeople +
                 ", bookingDate=" + bookingDate +
                 ", startTime=" + startTime +
+                ", additionalInfo=" + additionalInfo +
                 '}';
     }
 }

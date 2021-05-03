@@ -1,21 +1,23 @@
 package se.chalmers.TDA257.booking;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.xml.crypto.Data;
 import java.net.URI;
 import java.sql.Time;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 /**
  * Controller for the backend which acts as a RESTful API
  */
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "https://hamncafe-test.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingController {
 
     @Autowired
@@ -35,8 +37,8 @@ public class BookingController {
      * @return list of Times
      */
     @GetMapping("/availableTimes")
-    public List<Time> getAllAvailableTimes(){
-        return DatabaseController.fetchAvailableTimes();
+    public List<Time> getAllAvailableTimes(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @DateTimeFormat(pattern = "HH:mm:ss") LocalTime time, int guests){
+        return DatabaseController.fetchAvailableTimes(date, time, guests);
     }
 
     /**
@@ -79,9 +81,9 @@ public class BookingController {
      * @param booking
      */
     @PostMapping("/bookings")
-    public ResponseEntity<Void> addBooking(@RequestBody Booking booking) {
+    public int addBooking(@RequestBody Booking booking) {
         System.out.println(booking);
-        return null;
+        return DatabaseController.insertNewBooking(booking);
         //Booking b = bookings.saveBooking(booking);
         //URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 //.buildAndExpand(b.getId()).toUri();
