@@ -58,8 +58,8 @@ public class BookingController {
      * @return Booking object
      */
     @GetMapping("/bookings/{id}")
-    public Booking getBooking(@PathVariable long id) {
-        return bookings.getBooking(id);
+    public List<Booking> getBooking(@PathVariable int id) {
+        return DatabaseController.fetchBookingByID(id);
     }
 
     /**

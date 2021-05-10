@@ -37,7 +37,7 @@ public class DatabaseController {
      */
     @Autowired
     public static List<Booking> fetchAllBookings() {
-        return jdbcTemplate.query("select * from Bookings", new RowMapper<Booking>() {
+        return jdbcTemplate.query("SELECT * FROM BookingsView", new RowMapper<Booking>() {
             @Override
             public Booking mapRow(ResultSet rs, int rownumber) throws SQLException {
                 return new Booking(rs.getInt(4), rs.getString(6), rs.getString(5), rs.getString(7),
@@ -170,6 +170,14 @@ public class DatabaseController {
         String sqlQuery = ("SELECT FROM BookingsView WHERE guestemail = ? AND bookingDate = ? AND bookingTime = ?");
         Object[] params = new Object[] {email,date,time};
         return jdbcTemplate.queryForObject(sqlQuery,Booking.class,params);
+    }
+
+    @Autowired public static List<Booking> fetchBookingByID(int id){
+        String sqlQuery = ("SELECT DISTINCT * FROM BookingsView WHERE bookingID = ?");
+        Object[] params = new Object[] {id};
+        RowMapper rowMapper = (RowMapper<Booking>) (rs, rownumber) -> new Booking(rs.getInt(4), rs.getString(6), rs.getString(5), rs.getString(7),
+                rs.getInt(8), rs.getDate(1), rs.getTime(2).toLocalTime(), rs.getString(9));
+        return jdbcTemplate.query(sqlQuery,rowMapper,params);
     }
 
     @Autowired
